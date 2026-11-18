@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base Colors -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- App Backgrounds -->
+    <color name="bg_main">#FFF8FAFC</color>
+    <color name="text_primary">#FF0F172A</color>
+    <color name="text_secondary">#FF64748B</color>
+    <color name="text_tertiary">#FF94A3B8</color>
+    <color name="border_light">#FFE2E8F0</color>
+
+    <!-- Brand Colors -->
+    <color name="primary_blue">#FF0066FF</color>
+    <color name="primary_green">#FF10B981</color>
+    <color name="danger_red">#FFEF4444</color>
+    <color name="warning_orange">#FFF59E0B</color>
+
+    <!-- Card Colors -->
+    <color name="card_green_bg">#FFF0FDF4</color>
+    <color name="card_green_icon">#FFDCFCE7</color>
+    <color name="card_green_text">#FF16A34A</color>
+
+    <color name="card_blue_bg">#FFEFF6FF</color>
+    <color name="card_blue_icon">#FFDBEAFE</color>
+    <color name="card_blue_text">#FF2563EB</color>
+
+    <color name="card_purple_bg">#FFFDF4FF</color>
+    <color name="card_purple_icon">#FFF3E8FF</color>
+    <color name="card_purple_text">#FF9333EA</color>
+
+    <color name="card_orange_bg">#FFFFF7ED</color>
+    <color name="card_orange_icon">#FFFFEDD5</color>
+    <color name="card_orange_text">#FFEA580C</color>
+</resources>
