@@ -1,3 +1,4 @@
+
 package com.example.sos.ui.screens
 
 import androidx.compose.foundation.background
@@ -25,22 +26,39 @@ import androidx.compose.ui.unit.sp
 fun ProfileScreen(
     onBack: () -> Unit,
     onNavigateToSettings: () -> Unit,
-    onNavigateToHistory: () -> Unit
+    onNavigateToHistory: () -> Unit,
+    onLogout: () -> Unit
 ) {
+
+    // Logout confirmation dialog state
+    var showLogoutDialog by remember { mutableStateOf(false) }
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Profile", fontWeight = FontWeight.Bold, fontSize = 18.sp) },
+                title = {
+                    Text(
+                        "Profile",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back"
+                        )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.White
+                )
             )
         },
+
         bottomBar = {
-            // Logout button pinned to the bottom so it never scrolls
+            // Logout button pinned to the bottom
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -54,9 +72,13 @@ fun ProfileScreen(
                         .padding(16.dp)
                 ) {
                     Button(
-                        onClick = onBack,
+                        onClick = {
+                            showLogoutDialog = true
+                        },
                         shape = RoundedCornerShape(12.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFEE2E2)),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFFEE2E2)
+                        ),
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(50.dp)
@@ -71,7 +93,9 @@ fun ProfileScreen(
                 }
             }
         }
+
     ) { innerPadding ->
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -81,11 +105,16 @@ fun ProfileScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+
             // User Header Card
             Card(
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White
+                ),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 1.dp
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable(onClick = onNavigateToSettings)
@@ -97,15 +126,17 @@ fun ProfileScreen(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(14.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+
                         Box(
                             modifier = Modifier
                                 .size(56.dp)
                                 .clip(CircleShape)
-                                .background(Color(0xFFE2E8F0)), // Placeholder for profile image
+                                .background(Color(0xFFE2E8F0)),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
@@ -115,6 +146,7 @@ fun ProfileScreen(
                                 modifier = Modifier.size(32.dp)
                             )
                         }
+
                         Column(
                             verticalArrangement = Arrangement.spacedBy(2.dp)
                         ) {
@@ -124,6 +156,7 @@ fun ProfileScreen(
                                 fontSize = 18.sp,
                                 color = Color(0xFF0F172A)
                             )
+
                             Text(
                                 text = "harman@gmail.com",
                                 fontSize = 13.sp,
@@ -143,13 +176,18 @@ fun ProfileScreen(
             // Menu Items List
             Card(
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White
+                ),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 1.dp
+                ),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
                     modifier = Modifier.fillMaxWidth()
                 ) {
+
                     ProfileMenuItem(
                         icon = Icons.Default.VerifiedUser,
                         iconBgColor = Color(0xFFDCFCE7),
@@ -157,6 +195,7 @@ fun ProfileScreen(
                         title = "My Safety Status",
                         subtitle = "View your safety insights"
                     ) {}
+
                     HorizontalDivider(color = Color(0xFFF1F5F9))
 
                     ProfileMenuItem(
@@ -166,6 +205,7 @@ fun ProfileScreen(
                         title = "My Saved Places",
                         subtitle = "11 places"
                     ) {}
+
                     HorizontalDivider(color = Color(0xFFF1F5F9))
 
                     ProfileMenuItem(
@@ -175,6 +215,7 @@ fun ProfileScreen(
                         title = "My Routes",
                         subtitle = "5 recent routes"
                     ) {}
+
                     HorizontalDivider(color = Color(0xFFF1F5F9))
 
                     ProfileMenuItem(
@@ -185,6 +226,7 @@ fun ProfileScreen(
                         subtitle = "24 scans",
                         onClick = onNavigateToHistory
                     )
+
                     HorizontalDivider(color = Color(0xFFF1F5F9))
 
                     ProfileMenuItem(
@@ -194,6 +236,7 @@ fun ProfileScreen(
                         title = "Emergency Contacts",
                         subtitle = "3 contacts"
                     ) {}
+
                     HorizontalDivider(color = Color(0xFFF1F5F9))
 
                     ProfileMenuItem(
@@ -204,6 +247,7 @@ fun ProfileScreen(
                         subtitle = "App preferences",
                         onClick = onNavigateToSettings
                     )
+
                     HorizontalDivider(color = Color(0xFFF1F5F9))
 
                     ProfileMenuItem(
@@ -216,11 +260,75 @@ fun ProfileScreen(
                 }
             }
 
-            // Added spacer so the bottom content doesn't hide behind the fixed logout button
+            // Bottom spacing
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
+
+    // Logout Confirmation Dialog
+    if (showLogoutDialog) {
+
+        AlertDialog(
+            onDismissRequest = {
+                showLogoutDialog = false
+            },
+
+            title = {
+                Text(
+                    text = "Confirm Logout",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    color = Color(0xFF0F172A)
+                )
+            },
+
+            text = {
+                Text(
+                    text = "Are you sure you want to logout?",
+                    fontSize = 14.sp,
+                    color = Color(0xFF64748B)
+                )
+            },
+
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showLogoutDialog = false
+                        onLogout()
+                    }
+                ) {
+                    Text(
+                        text = "Yes",
+                        color = Color(0xFFEF4444),
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            },
+
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        showLogoutDialog = false
+                    }
+                ) {
+                    Text(
+                        text = "No",
+                        color = Color(0xFF334155),
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            },
+
+            containerColor = Color.White,
+            shape = RoundedCornerShape(16.dp)
+        )
+    }
 }
+
+
+// --------------------------------------------------
+// PROFILE MENU ITEM
+// --------------------------------------------------
 
 @Composable
 fun ProfileMenuItem(
@@ -231,6 +339,7 @@ fun ProfileMenuItem(
     subtitle: String,
     onClick: () -> Unit = {}
 ) {
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -239,10 +348,12 @@ fun ProfileMenuItem(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
+
         Row(
             horizontalArrangement = Arrangement.spacedBy(14.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             // Colorful Icon Box
             Box(
                 modifier = Modifier
@@ -259,16 +370,24 @@ fun ProfileMenuItem(
                 )
             }
 
-            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
                 Text(
                     text = title,
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,
                     color = Color(0xFF0F172A)
                 )
-                Text(text = subtitle, fontSize = 12.sp, color = Color(0xFF64748B))
+
+                Text(
+                    text = subtitle,
+                    fontSize = 12.sp,
+                    color = Color(0xFF64748B)
+                )
             }
         }
+
         Icon(
             Icons.Default.ChevronRight,
             contentDescription = null,
@@ -278,13 +397,17 @@ fun ProfileMenuItem(
     }
 }
 
-// --- The Settings Screen and other Helper Composables remain exactly the same ---
+
+// --------------------------------------------------
+// SETTINGS SCREEN
+// --------------------------------------------------
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     onBack: () -> Unit
 ) {
+
     var locationSharing by remember { mutableStateOf(true) }
     var notifications by remember { mutableStateOf(true) }
     var darkMode by remember { mutableStateOf(false) }
@@ -292,16 +415,29 @@ fun SettingsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Settings", fontWeight = FontWeight.Bold, fontSize = 18.sp) },
+                title = {
+                    Text(
+                        "Settings",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back"
+                        )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.White
+                )
             )
         }
+
     ) { innerPadding ->
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -311,58 +447,105 @@ fun SettingsScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+
             Card(
                 shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White
+                ),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 1.dp
+                ),
                 modifier = Modifier.fillMaxWidth()
             ) {
+
                 Column(
                     modifier = Modifier.fillMaxWidth()
                 ) {
+
                     SettingToggleItem(
                         icon = Icons.Default.ShareLocation,
                         title = "Location Sharing",
                         subtitle = "Used for safer routes and images",
                         checked = locationSharing,
-                        onCheckedChange = { locationSharing = it })
+                        onCheckedChange = {
+                            locationSharing = it
+                        }
+                    )
+
                     HorizontalDivider(color = Color(0xFFF1F5F9))
+
                     SettingToggleItem(
                         icon = Icons.Default.Notifications,
                         title = "Notifications",
                         subtitle = "Alerts, safety updates and GeoAI",
                         checked = notifications,
-                        onCheckedChange = { notifications = it })
+                        onCheckedChange = {
+                            notifications = it
+                        }
+                    )
+
                     HorizontalDivider(color = Color(0xFFF1F5F9))
+
                     SettingToggleItem(
                         icon = Icons.Default.DarkMode,
                         title = "Dark Mode",
                         subtitle = "Switch to dark theme",
                         checked = darkMode,
-                        onCheckedChange = { darkMode = it })
+                        onCheckedChange = {
+                            darkMode = it
+                        }
+                    )
+
                     HorizontalDivider(color = Color(0xFFF1F5F9))
+
                     SettingMenuItem(
                         icon = Icons.Default.Language,
                         title = "Language",
                         value = "English"
                     )
+
                     HorizontalDivider(color = Color(0xFFF1F5F9))
-                    SettingMenuItem(icon = Icons.Default.Map, title = "Map View", value = "Default")
+
+                    SettingMenuItem(
+                        icon = Icons.Default.Map,
+                        title = "Map View",
+                        value = "Default"
+                    )
+
                     HorizontalDivider(color = Color(0xFFF1F5F9))
+
                     SettingMenuItem(
                         icon = Icons.Default.Lock,
                         title = "Privacy & Security",
                         value = ""
                     )
+
                     HorizontalDivider(color = Color(0xFFF1F5F9))
-                    SettingMenuItem(icon = Icons.Default.Help, title = "Help & Support", value = "")
+
+                    SettingMenuItem(
+                        icon = Icons.Default.Help,
+                        title = "Help & Support",
+                        value = ""
+                    )
+
                     HorizontalDivider(color = Color(0xFFF1F5F9))
-                    SettingMenuItem(icon = Icons.Default.Info, title = "About Vardan", value = "")
+
+                    SettingMenuItem(
+                        icon = Icons.Default.Info,
+                        title = "About Vardan",
+                        value = ""
+                    )
                 }
             }
         }
     }
 }
+
+
+// --------------------------------------------------
+// SETTINGS TOGGLE ITEM
+// --------------------------------------------------
 
 @Composable
 fun SettingToggleItem(
@@ -372,6 +555,7 @@ fun SettingToggleItem(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit
 ) {
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -379,30 +563,49 @@ fun SettingToggleItem(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
+
         Row(
             horizontalArrangement = Arrangement.spacedBy(14.dp),
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.weight(1f)
         ) {
+
             Icon(
                 icon,
                 contentDescription = null,
                 tint = Color(0xFF334155),
                 modifier = Modifier.size(22.dp)
             )
-            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+
+            Column(
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
                 Text(
                     text = title,
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,
                     color = Color(0xFF0F172A)
                 )
-                Text(text = subtitle, fontSize = 11.sp, color = Color(0xFF64748B))
+
+                Text(
+                    text = subtitle,
+                    fontSize = 11.sp,
+                    color = Color(0xFF64748B)
+                )
             }
         }
-        Switch(checked = checked, onCheckedChange = onCheckedChange)
+
+        Switch(
+            checked = checked,
+            onCheckedChange = onCheckedChange
+        )
     }
 }
+
+
+// --------------------------------------------------
+// SETTINGS MENU ITEM
+// --------------------------------------------------
 
 @Composable
 fun SettingMenuItem(
@@ -410,6 +613,7 @@ fun SettingMenuItem(
     title: String,
     value: String
 ) {
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -418,16 +622,19 @@ fun SettingMenuItem(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
+
         Row(
             horizontalArrangement = Arrangement.spacedBy(14.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             Icon(
                 icon,
                 contentDescription = null,
                 tint = Color(0xFF334155),
                 modifier = Modifier.size(22.dp)
             )
+
             Text(
                 text = title,
                 fontWeight = FontWeight.Bold,
@@ -435,13 +642,20 @@ fun SettingMenuItem(
                 color = Color(0xFF0F172A)
             )
         }
+
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             if (value.isNotEmpty()) {
-                Text(text = value, fontSize = 13.sp, color = Color(0xFF64748B))
+                Text(
+                    text = value,
+                    fontSize = 13.sp,
+                    color = Color(0xFF64748B)
+                )
             }
+
             Icon(
                 Icons.Default.ChevronRight,
                 contentDescription = null,

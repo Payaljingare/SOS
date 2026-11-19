@@ -78,6 +78,16 @@ fun AppNavigation() {
             ProfileScreen(
                 onBack = { navController.popBackStack() },
                 onNavigateToSettings = { navController.navigate("settings") },
+                onLogout = {
+                    // Clear user session
+
+                    navController.navigate("login") {
+                        popUpTo(navController.graph.id) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                    }
+                },
                 onNavigateToHistory = { navController.navigate("scan_history") }
             )
         }
